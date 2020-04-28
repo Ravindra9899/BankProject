@@ -1,0 +1,54 @@
+<!-- <p>
+  fileupload works!
+</p>
+<div class="row">
+<div class="col-md-12">
+  <div class="form-group dispaly-block">
+    <label>Product Name</label>
+    <input class="form-control" [(ngModel)] = "name" name="name"
+      placeholder=" Name">
+   <p *ngIf="!AddProduct.get('product').valid && (AddProduct.get('product').touched || formDir.submitted)"
+      class="error">Product Name is required!</p> -->
+  <!-- </div>
+  <div class="form-group dispaly-block">
+    <label>Product Image</label>
+ <input type="file" [(ngModel)]="uploadImage" formControlName="uploadImage" name="uploadImage" (change)="onFileChange($event)" />  
+    <input type="file" class="form-control" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)"
+      [uploadInput]="uploadInput" placeholder="Upload Image" multiple>
+  </div>
+
+  <div class="form-group dispaly-block">
+       <button *ngIf="!id" class="btn btn-success" type="submit" (click)="addrow()">+</button>
+  </div>
+</div> -->
+
+
+<!-- <div class="col-md-4">
+  
+</div> -->
+
+ 
+    <!-- <div class="col-md-4">
+      <div class="form-group">
+        <button *ngIf="!id" class="btn btn-success" type="submit" (click)="ProductAdd()">Save</button>
+      </div>
+    </div>
+  </div>  -->
+
+
+  <form [formGroup]="productdata" (ngSubmit)="ProductAdd()">
+    <div formArrayName="more">
+      <div *ngFor="let items of productsArray.controls;let i = index;" [formGroupName]="i">
+        <h4>Product {{i+1}}</h4>
+        <input class="field"type="text" placeholder="Enter Product Name" formControlName = "p_name"><br>
+        <input formControlName = "image" type="file" class="form-control" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)"
+            [uploadInput]="uploadInput" placeholder="Upload Image" multiple>
+
+        <button class="btn" (click)="removeProduct(i)">Remove</button>
+      </div>
+    </div>
+    <div class="submition">
+      <button class="btn" type="button" (click)="addProduct()">Add More+</button>
+      <input class="btn" type="submit" value="Add Product" [disabled]="!this.productdata.valid">
+    </div>
+  </form>
