@@ -42,7 +42,7 @@ export class ResetPasswordComponent implements OnInit {
             }
             this.userService.resetPassword(param).subscribe(
             res => {
-                this.toastr.success('Password reset successfully !!');
+                alert('Password reset successfully !!');
                 this.resetForm.reset();
                 this.router.navigate(['/login']);
             },

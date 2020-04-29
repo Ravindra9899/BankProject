@@ -29,21 +29,18 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('form',this.signUpForm.valid);
     if(this.signUpForm.valid){
     this.userService.postUser(this.signUpForm.value).subscribe(
       res => {
-        //setTimeout(() => this.showSucessMessage = false, 4000);
-        this.toastr.success('User successfully registered !!');
+        alert('User successfully registered !!');
         this.signUpForm.reset();
       },
       err => {
         if (err.status === 422) {
-          //this.serverErrorMessages = err.error.join('<br/>');
-          this.toastr.error('Duplicate email adrress found.');
+          alert('Duplicate email adrress found.');
         }
         else
-          this.toastr.error('Something went wrong.Please contact admin.');
+          alert('Something went wrong.Please contact admin.');
       }
     );
     }else{
