@@ -1,34 +1,22 @@
 const mongoose = require('mongoose');
 const passport = require('passport');
 const _ = require('lodash');
-
 const User = mongoose.model('User');
-const Image = require('./../models/image.module');
-
-//  let data = [{a: 1, b: 'str', c: true, d: 999}, {b: String}]
-// var elem={b:_.map(_.filter(data,{b:'str'}),'b')[0]};
-// console.log(elem,'hhghghghghhghg');
-
-
-// let data2 = [{a: 1, b: 'str', c: true, d: 999}, {a: Number, b: String, c: Boolean}]
-// // output { a: 1, b: 'str', c: true }
-// var elem1={a:_.map(_.filter(data2,{a:1}),'a')[0]};
-// var elem2={b:_.map(_.filter(data2,{b:'str'}),'b')[0]};
-// var elem3={c:_.map(_.filter(data2,{c:true}),'c')[0]};
-
-
-// let data3 = [{a: 1, b: 'str', c: true, d: 999}, {a: Boolean, b: Number}]
-// var elem1={a:_.map(_.filter(data2,{a: true}),'a')[0]};
-// var elem2={b:_.map(_.filter(data2,{b: 1}),'b')[0]};
-
-
-
-
+const transactionDetail = require('./../models/transactions.model');
+const token = require('./../models/token.model');
+var mailer = require('./../mailer/mailer');
+var crypto = require('crypto');
+const bcrypt = require('bcryptjs');
 module.exports.register = (req, res, next) => {
     var user = new User();
-    user.fullName = req.body.fullName;
+    let accountNo = Math.floor(100000 + Math.random() * 900000000000);
+    user.fullName = req.body.name;
     user.email = req.body.email;
+    user.phone = req.body.phone;
+    user.gender = req.body.gender;
+    user.city = req.body.city;
     user.password = req.body.password;
+    user.accountNo=accountNo;
     user.save((err, doc) => {
         if (!err)
             res.send(doc);
@@ -40,6 +28,202 @@ module.exports.register = (req, res, next) => {
         }
 
     });
+}
+
+exports.depositAmt = (req, res, next) => {
+    var email=req.body.email;
+    transactionDetail.findOne({
+        accountNo : req.body.accountNo,
+        userId : req.body.userId})
+        .sort({createdAt:-1})
+        .exec((err, resp) => {
+            if (resp) {
+                 var object1 = new transactionDetail({
+                        accountNo : req.body.accountNo,
+                        userId : req.body.userId,
+                        type : 'deposit',
+                        transactionAmt:req.body.amount,
+                        amount : resp.amount+req.body.amount
+                })
+                object1.save((err, doc) => {
+                    if (!err){
+                        var dmessage = 'Dear User <br><br> you have deposit : ' + doc.transactionAmt+' INR';
+                        var dsubject = 'Deposit amount';
+                        var mailAdmin = new mailer();
+                        mailAdmin.sendMail(email, dmessage, dsubject);
+                        res.send(doc);
+                    } else {
+                        res.send(err);
+                    }
+
+                });
+            }else {
+                 var object1 = new transactionDetail({
+                        accountNo : req.body.accountNo,
+                        userId : req.body.userId,
+                        type : 'deposit',
+                        transactionAmt:req.body.amount,
+                        amount : req.body.amount
+                })
+                object1.save((err, doc) => {
+                    if (!err){
+                        var dmessage = 'Dear User <br><br> you have deposit : ' + doc.transactionAmt+' INR';
+                        var dsubject = 'Deposit amount';
+                        var mailAdmin = new mailer();
+                        mailAdmin.sendMail(email, dmessage, dsubject);
+                        res.send(doc);
+                    }else {
+                        res.send(err);
+                    }
+
+                });
+            }
+        })
+   
+}
+
+exports.WithdrawAmt = (req, res, next) => {
+    var email=req.body.email;
+    transactionDetail.findOne({
+        accountNo : req.body.accountNo,
+        userId : req.body.userId})
+        .sort({createdAt:-1})
+        .exec((err, resp) => {
+            if (resp) {
+                 var object1 = new transactionDetail({
+                        accountNo : req.body.accountNo,
+                        userId : req.body.userId,
+                        type : 'withdraw',
+                        transactionAmt:req.body.amount,
+                        amount : resp.amount-req.body.amount
+                })
+                object1.save((err, doc) => {
+                    if (!err){
+                        var wmessage = 'Dear User <br><br> you have withdraw : ' + doc.transactionAmt+' INR';
+                        var wsubject = 'Withdraw amount';
+                        var mailAdmin = new mailer();
+                        mailAdmin.sendMail(email, wmessage, wsubject);
+                        res.send(doc);
+                    }else {
+                        res.send(err);
+                    }
+
+                });
+            }else {
+                 var object1 = new transactionDetail({
+                        accountNo : req.body.accountNo,
+                        userId : req.body.userId,
+                        type : 'withdraw',
+                        transactionAmt:req.body.amount,
+                        amount : req.body.amount
+                })
+                object1.save((err, doc) => {
+                    if (!err){
+                        var wmessage = 'Dear User <br><br> you have withdraw : ' + doc.transactionAmt+' INR';
+                        var wsubject = 'Withdraw amount';
+                        var mailAdmin = new mailer();
+                        mailAdmin.sendMail(email, wmessage, wsubject);
+                        res.send(doc);
+                    }else {
+                        res.send(err);
+                    }
+
+                });
+            }
+        })
+   
+}
+
+exports.getTransactions = (req, res, next) => {
+    transactionDetail.find({
+        accountNo : req.body.accountNo,
+        userId : req.body.userId,
+        createdAt:{$gte:req.body.fromDate,$lte:req.body.toDate}
+        })
+        .sort({createdAt:-1})
+        .exec((err, resp) => {
+            if (resp.length>0) {
+                res.send(resp);       
+            }else {
+                res.send(err);
+            }
+        })
+   
+}
+
+exports.checkBalance = (req, res, next) => {
+   transactionDetail.findOne({
+        accountNo : req.body.accountNo,
+        userId : req.body.userId})
+        .sort({createdAt:-1})
+        .exec((err, resp) => {
+            if (resp) {
+               res.send(resp);
+            }else {
+               res.send(err);
+            }
+        })
+}
+
+module.exports.sendVerificationLink = (req, res, next) => {
+     var tokenDetail = new token({
+        email : req.body.email,
+        token: crypto.randomBytes(16).toString('hex')
+    });
+    tokenDetail.save((err, doc) => {
+        if (!err){
+                   var email = req.body.email;
+                   var message = "Dear User,</br></br>Your reset passwork Link is given below, Please click on it and reset your password</br></br>Link : http://localhost:4200/reset-password/" + doc.token;
+                   var subject = 'Regarding : Reset Password';
+                   var mailerin = new mailer();
+                   mailerin.sendMail(email, message, subject);
+                   res.send(doc);
+        }else {
+              res.send(doc);
+        }
+
+    });
+}
+
+module.exports.resetPassword = (req, res, next) => {
+    token.findOne({ token: req.body.token },
+        (err, token) => {
+            if (!token)
+                return res.status(404).json({ status: false, message: 'token not found.' });
+            else{
+                var emailId=token.email;
+                 bcrypt.genSalt(10, (err, salt) => {
+                 bcrypt.hash(req.body.password, salt, (err, hash) => {
+                            if (hash) {
+                                User.updateOne({ email: emailId },
+                                    {
+                                        $set: { password: hash }
+                                    }
+                                ).exec((err, doc) => {
+                                    if (doc) {
+                                        var outputJSON = {
+                                            status: 200,
+                                            msg: 'Password Updated Successfully',
+                                            data: doc
+                                        }
+                                        res.status(200).send(outputJSON);
+                                    } else {
+                                        var outputJSON = {
+                                            status: 201,
+                                            msg: 'Please Fill All Fields',
+                                            data: err
+                                        }
+                                        res.status(201).send(outputJSON)
+                                    }
+                                });
+                            } else {
+                                next();
+                            }
+                    });
+                });
+            }
+        }
+    );
 }
 
 module.exports.authenticate = (req, res, next) => {
@@ -60,105 +244,8 @@ module.exports.userProfile = (req, res, next) =>{
             if (!user)
                 return res.status(404).json({ status: false, message: 'User record not found.' });
             else
-                return res.status(200).json({ status: true, user : _.pick(user,['fullName','email']) });
+                return res.status(200).json({ status: true, user : _.pick(user,['_id','accountNo','fullName','email','phone','gender','city']) });
         }
     );
 }
 
-
-
-//--------------------Image Upload----------------
-var path = require('path');
-var formidable = require("formidable");
-
-
-
-var imageUrl = './public/assets/uploads';
-exports.saveImageDocument = async function (req, res) {
-    var completeFlag = false;
-    const form = new formidable.IncomingForm();
-    form.uploadDir = imageUrl;
-    form.keepExtensions = true;
-    var pathSeparator = path.sep;
-    let count = 0;
-    form.on('error', (err) => {
-        console.log('error', err);
-    });
-    form.parse(req, async function (err, fields, files) {
-        let multipleUpload = new Promise(async (resolve, reject) => {
-            let newImgUrls = [];
-            if (Object.keys(files).length > 0) {
-                for (var field in files) {
-                    var fileType = files[field].type.substring(0, 5);
-                    if (fileType == 'image') {
-                        if (files[field].path) {
-                            var filePATH = `${files[field].path}`.replace('public/', '');
-                            count++;
-                            newImgUrls.push({
-                                'name': filePATH
-                            })
-                            if (count == Object.keys(files).length) {
-                                completeFlag = true;
-                                resolve(newImgUrls);
-                            }
-                        }
-                    } else {
-                        res.json({
-                            code: 500,
-                            message: "Invalid image format."
-                        })
-                    }
-                }
-            }
-        });
-        let upload = await multipleUpload;
-        if (upload && completeFlag) {
-
-            res.json({
-                code: 200,
-                message: "Images upload successfully.",
-                data: upload
-
-            })
-        } else {
-            res.json({
-                code: 500,
-                message: "An occured while uploading images."
-            })
-        }
-    })
-}
-//------------END--------------------
-
-//-------Add Product--------------
-exports.saveImagedata = function (req, res) {
-    var data = req.body.Name.more;
-  
-    console.log('dataRohitssss', data);
-    var newImage = new Image({
-
-        groups: req.body.Name.more
-      
-        // name : data.Name,
-        // image: data.ProductImage,
-    
-    });
-    console.log(newImage,'ashdagdhjsgdjsagd');
-        newImage.save(function (saveErr, savedata) {
-        if (saveErr) {
-            var outputJson = {
-                status: 400,
-                message: saveErr,
-            }
-            return res.json(outputJson);
-        } else {
-            var outputJson = {
-                status: 200,
-                data: savedata,
-                msg: "Product Added successful"
-            }
-            return res.json(outputJson);
-        }
-    })
-}
-//----------------END------------------------

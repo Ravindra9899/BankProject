@@ -1,0 +1,45 @@
+<form #postForm="ngForm" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+  <input type="text" formControlName="name" required placeholder="Enter name">
+  <div *ngIf="signUpForm.controls.name.errors?.required">
+    <label class="validation-message">name is required?</label>
+  </div>
+  <input type="email" formControlName="email" placeholder="Enter email">
+  <div *ngIf="signUpForm.controls.email.errors?.required">
+    <label *ngIf="signUpForm.controls.email.errors?.required" class="validation-message">email is required?</label>
+  </div>
+  <div *ngIf="signUpForm.controls.email.errors?.email">
+    <label *ngIf="signUpForm.controls.email.errors?.email" class="validation-message">invalid email?</label>
+  </div>
+  <input type="number" maxlength="10" formControlName="phone" placeholder="Enter phone no" onkeypress="return (event.charCode > 47 && event.charCode < 58)">
+   <div *ngIf="signUpForm.controls.phone.errors?.required">
+    <label *ngIf="signUpForm.controls.phone.errors?.required" class="validation-message">phone no is required?</label>
+  </div>
+  <div *ngIf="signUpForm.controls.phone.errors?.pattern != null">
+    <label *ngIf="signUpForm.controls.phone.errors?.pattern != null" class="validation-message">invalid number?</label>
+  </div>
+  <select class="selectTypeBox" formControlName="gender" placeholder="Select gender">
+  <option value="Male">Male</option>
+  <option value="Female">Female</option>
+  <option value="Other">Other</option>
+  </select>
+  <div *ngIf="signUpForm.controls.gender.errors?.required">
+    <label *ngIf="signUpForm.controls.gender.errors?.required" class="validation-message">gender is required?</label>
+  </div>
+  <select class="selectTypeBox" formControlName="city" placeholder="Select city">
+  <option value="Gurgaon">Gurgaon</option>
+  <option value="Jaipur">Jaipur</option>
+  <option value="Delhi">Delhi</option>
+  </select>
+  <div *ngIf="signUpForm.controls.city.errors?.required">
+    <label *ngIf="signUpForm.controls.city.errors?.required" class="validation-message">city is required?</label>
+  </div>
+  <input type="password" formControlName="password" placeholder="Enter password">
+  <div *ngIf="signUpForm.controls.password.errors?.required">
+    <label *ngIf="signUpForm.controls.password.errors?.required" class="validation-message">password is required?</label>
+  </div>
+  <div *ngIf="signUpForm.controls.password.errors?.pattern != null" tooltip="At Least 8 Character Length , One Upper Case Letter , One Lower Case Letter , One Special
+                    Character , One Number Digit">
+    <label *ngIf="signUpForm.controls.password.errors?.pattern != null" class="validation-message">wrong password combination?</label>
+  </div>
+  <input type="submit" value="Sign Up">
+</form>

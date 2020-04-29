@@ -1,0 +1,499 @@
+@import "src/@fuse/scss/fuse";
+
+.mail-register-compose {
+
+    @include media-breakpoint('xs') {
+        width: 100%;
+    }
+
+    @include media-breakpoint('gt-xs') {
+        width: 1100px;
+    }
+
+    .mat-dialog-container {
+        padding: 0;
+
+        .compose-form {
+
+            .mat-form-field {
+                width: 100%;
+            }
+
+            .show-hide-extra-fields {
+                text-align: right;
+                cursor: pointer;
+                font-size: 12px;
+            }
+
+            .attachment-list {
+                font-size: 13px;
+
+                .attachment {
+                    border: 1px solid;
+                    border-radius: 20px;
+                    padding-left: 16px;
+                    margin-top: 8px;
+
+                    .filename {
+                        font-weight: 600;
+                    }
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .dialog-content-wrapper {
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.mail-compose-dialog {
+
+    @include media-breakpoint('xs') {
+        width: 100%;
+    }
+
+    @include media-breakpoint('gt-xs') {
+        width: 640px;
+    }
+
+    .mat-dialog-container {
+        padding: 0;
+
+        .compose-form {
+
+            .mat-form-field {
+                width: 100%;
+            }
+
+            .show-hide-extra-fields {
+                text-align: right;
+                cursor: pointer;
+                font-size: 12px;
+            }
+
+            .attachment-list {
+                font-size: 13px;
+
+                .attachment {
+                    border: 1px solid;
+                    border-radius: 20px;
+                    padding-left: 16px;
+                    margin-top: 8px;
+
+                    .filename {
+                        font-weight: 600;
+                    }
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .dialog-content-wrapper {
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.mat-color-header {
+    font: 500 15px/30px Roboto, "Helvetica Neue", sans-serif;
+    margin: 0;
+    background: #ECECEE;
+}
+
+.label-font {
+    font: 400 16px/1.125 Muli, Helvetica Neue, Arial, sans-serif !important;
+}
+
+.radio-button-style {
+    padding: 0;
+    min-width: 0;
+    width: 25px;
+    vertical-align: middle;
+    height: 25px;
+    flex-shrink: 0;
+    line-height: 40px;
+    border-radius: 50%;
+}
+
+
+.wth {
+    width: 100%;
+}
+
+.wth-50 {
+    width: 45%;
+}
+
+
+.mr-10 {
+    margin-right: 10% !important;
+}
+
+.fuse-card-radius {
+    border-radius: 8px;
+    border: 1px solid;
+}
+
+.mat-form-field-flex>.mat-form-field-infix {
+    padding: 0.29em 0px !important;
+}
+
+.mat-form-field-appearance-outline {
+    .mat-form-field-infix {
+        padding: 0.29em 0 !important;
+    }
+
+    .mat-toggle {
+        padding: 2px !important;
+    }
+
+}
+
+.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+}
+
+.mat-form-field-label-wrapper {
+    top: -1.5em !important;
+}
+
+.mat-toggle {
+    padding: 4px !important;
+}
+
+
+.col-100 {
+    float: left;
+    width: 100%;
+    // margin-top: 6px;
+    // padding-right: 10px;
+    // margin-bottom: 8px;
+}
+
+.col-98 {
+    float: left;
+    width: 98%;
+}
+
+.col-90 {
+    float: left;
+    width: 90%;
+    // margin-top: 6px;
+    // padding-right: 10px;
+    // margin-bottom: 8px;
+}
+
+.col-50 {
+    float: left;
+    width: 50%;
+    // margin-top: 6px;
+    padding-right: 10px;
+}
+
+.col-34 {
+    float: left;
+    width: 34%;
+    margin-top: 6px;
+    padding-right: 10px;
+}
+
+.col-33 {
+    float: left;
+    width: 33%;
+
+
+}
+
+.col-30 {
+    float: left;
+    width: 30%;
+
+
+}
+
+.col-70 {
+    float: left;
+    width: 70%;
+
+
+}
+
+.col-60 {
+    float: left;
+    width: 60%;
+
+
+}
+.col-40 {
+    float: left;
+    width: 40%;
+
+
+}
+
+.col-30 {
+    float: left;
+    width: 30%;
+
+
+}
+
+.col-22 {
+    float: left;
+    width: 22%;
+
+
+}
+
+.col-48 {
+    float: left;
+    width: 48%;
+
+
+}
+
+.col-44 {
+    float: left;
+    width: 44%;
+
+
+}
+.col-50-rt{
+float: right;
+width: 50% !important; 
+}
+
+.col-50-1 {
+    float: left;
+    width: 50% !important;
+}
+
+.col-43-1 {
+    float: left;
+    width: 43%;
+}
+
+.col-55 {
+    float: left;
+    width: 56%;
+    margin-top: 6px;
+    padding-right: 10px;
+}
+
+.col-20 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+    padding-right: 10px;
+}
+
+.col-20-I {
+    float: left;
+    width: 25%;
+
+    padding-right: 10px;
+}
+
+.col-26 {
+    float: left;
+    width: 26%;
+
+}
+
+.col-10 {
+    float: left;
+    width: 10%;
+
+}
+
+.col-11 {
+    float: left;
+    width: 11%;
+
+}
+
+.col-21 {
+    float: left;
+    width: 20% !important;
+}
+
+.col-40 {
+    float: left;
+    width: 41.5% !important;
+
+}
+
+
+
+.col-15 {
+    float: left;
+    width: 15%;
+
+}
+
+.col-5 {
+    float: left;
+    width: 5%;
+
+}
+
+.col-32 {
+    float: left;
+    width: 32%;
+
+}
+
+.col-15-I {
+
+    width: 15% !important;
+
+}
+
+.col-10-I {
+
+    width: 10% !important;
+
+}
+
+@media screen and (max-width: 600px) {
+
+    .col-50,
+    .col-15,
+    .col-11,
+    .col-26,
+    .col-30,
+    .col-15-I,
+    .col-70,
+    .col-40,
+    .col-10-I,
+    .col-20-I,
+    .col-60,
+    .col-21,
+    .col-5,
+    .col-50-1,
+    .col-98,
+    .col-20,
+    .col-50-rt,
+    .col-10,
+    .col-90,
+    .col-34,
+    .col-33,
+    .col-44,
+    .col-100,
+    .col-55,
+    input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+}
+
+.Float-rt {
+    float: right !important;
+}
+
+.overflow {
+    overflow-y: hidden !important;
+    overflow: hidden !important;
+}
+
+.content-scroll {
+
+    height: 80% !important;
+    max-height: 80% !important;
+
+
+}
+
+.mat-checkbox-inner-container {
+    height: 14px !important;
+    width: 14px !important;
+}
+
+.mat-checkbox {
+    font-size: 14px !important;
+}
+
+.mat-radio-container {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.mat-radio-outer-circle {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.mat-radio-inner-circle {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.mat-radio-button .mat-radio-ripple {
+    width: 20px !important;
+    height: 20px !important;
+    left: calc(50% - 10px) !important;
+    top: calc(50% - 10px) !important;
+}
+
+.mat-radio-button {
+    font-size: 14px !important;
+}
+
+.input-custom {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 1%;
+    width: 40px;
+    padding: 0 5px;
+    height: 24px;
+    position: relative;
+    vertical-align: initial;
+}
+
+.text-algin-center{
+      text-align: center;
+}
+
+.text-align-right{
+    text-align: right !important;
+}
+
+.text-align-end{
+    text-align: end !important;
+}
+
+
+.ft-wght{
+    font-weight: bold;
+}
+
+.font-sze{
+    font-size: 23px;
+    
+}
+
+.background-color-new{
+    background-color: antiquewhite !important;
+}
+
+.flt{
+    float: left !important;
+}
+
+.display-inline{
+    display: flex;
+    align-items: center;
+}
+
+

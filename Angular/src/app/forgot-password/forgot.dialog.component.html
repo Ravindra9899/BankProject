@@ -1,0 +1,20 @@
+<div class="d-flex justify-content-between inline-block">
+<h3 mat-dialog-title class="text-center"> User Email</h3>
+<button class="close" (click)="onNoClick()">X</button>
+</div>
+<div mat-dialog-content>
+<br>
+  <br>
+<div class="row">
+    <div class="col-md-12">
+        <input type="text" [formControl]="email" placeholder="Enter your email">
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+  <div class="col-md-2">
+      <input type="button" (click)="submit()" value="submit" />
+  </div>
+  </div>
+  </div>

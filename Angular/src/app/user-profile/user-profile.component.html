@@ -1,0 +1,41 @@
+<table *ngIf="userDetails" class="table-fill">
+  <thead>
+      <tr>
+          <th colspan="2" class="text-center">Account No</th>
+          <th class="text-center">{{userDetails.accountNo}}</th>
+          <th><input type="button" (click)="onLogout()" value="LOGOUT" /></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Name</td>
+          <td>{{userDetails.fullName.split(' ')[0]}}</td>
+          <td>Email</td>
+          <td>{{userDetails.email}}</td>
+      </tr> 
+      <tr>
+        <td>Contact No</td>
+        <td>{{userDetails.phone}}</td>
+        <td>City</td>
+        <td>{{userDetails.city}}</td>
+      </tr>
+      <tr>
+         
+          <td  class="text-center">
+              <input type="number" [formControl]="depositVar"/>
+              <input type="button" (click)="dipositAmt(userDetails)" value="Deposit Amt" />
+          </td>
+          <td  class="text-center">
+                 <input type="number" [formControl]="withdrawVar"/>
+                <input type="button" (click)="WithdrawAmt(userDetails)" value="Withdraw Amt" />
+            </td>
+            <td  class="text-center">
+                <span>{{balance}} INR</span>
+                <input type="button" (click)="checkBalance(userDetails)" value="Balance" />
+            </td>
+            <td  class="text-center">
+                <input type="button" (click)="Transactions(userDetails)" value="Transactions" />
+            </td>
+      </tr>
+  </tbody>
+</table>

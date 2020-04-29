@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-between inline-block">
+<h4 mat-dialog-title class="text-center"> Transactions Details</h4>
+<button class="close" (click)="onNoClick()">X</button>
+</div>
+<div mat-dialog-content>
+<div class="row">
+    <div class="col-md-4">
+       <mat-form-field >
+            <input matInput [matDatepicker]="picker1" placeholder="select from date" [formControl]="fromDate">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+        </div>
+        <div class="col-md-4">
+      <mat-form-field>
+            <input matInput [matDatepicker]="picker2" placeholder="select to date" [formControl]="toDate">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        
+      <input type="button" (click)="view()" value="View" />
+      </div>
+
+  </div>
+  <div class="row">
+  <div class="col-md-12">
+  <div class="bgColor" *ngIf="isShowTransaction">
+    <table class="table-fill">
+        <thead>
+            <tr>
+          <th class="text-center">Transactions Id</th>
+          <th class="text-center">Type</th>
+          <th class="text-center">Amount</th>
+          <th class="text-center">Date</th>
+            </tr>
+        </thead>
+  <tbody>
+    <ng-container *ngFor="let records of result">
+      <tr>
+          <td>{{records._id}}</td>
+          <td *ngIf="records.type=='deposit'" style="background-color:#b3ffe0">{{records.type}}</td>
+          <td *ngIf="records.type=='withdraw'"  style="background-color:#ffb3b3">{{records.type}}</td>
+          <td>{{records.transactionAmt}} INR</td>
+          <td>{{records.createdAt | date:'dd/MM/yyyy'}}</td>
+      </tr> 
+     </ng-container> 
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+  </div>
