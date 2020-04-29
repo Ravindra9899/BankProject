@@ -38,6 +38,22 @@ export class UserProfileComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  changePassword(){
+       let param={
+           email:this.userDetails['email'],
+           emailSentOrNot:false
+       }   
+       this.userService.sendVerificationLink(param).subscribe(res => {
+        if(res){
+          this.router.navigate(['/reset-password/',res['token']]);
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
   Transactions(userObj) {
     this.dialog.open(TransactionsComponent, {
         height:'600px',

@@ -29,7 +29,8 @@ public dialogRef: MatDialogRef<ForgotDialogComponent>,
           alert('Please enter registered email !');
       }else{
        let param={
-           email:this.email.value
+           email:this.email.value,
+           emailSentOrNot:true
        }   
        this.userService.sendVerificationLink(param).subscribe(res => {
         if(res){

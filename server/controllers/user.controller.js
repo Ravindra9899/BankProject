@@ -172,12 +172,16 @@ module.exports.sendVerificationLink = (req, res, next) => {
     });
     tokenDetail.save((err, doc) => {
         if (!err){
+            if(req.body.emailSentOrNot){
                    var email = req.body.email;
                    var message = "Dear User,</br></br>Your reset passwork Link is given below, Please click on it and reset your password</br></br>Link : http://localhost:4200/reset-password/" + doc.token;
                    var subject = 'Regarding : Reset Password';
                    var mailerin = new mailer();
                    mailerin.sendMail(email, message, subject);
                    res.send(doc);
+            }else{
+                res.send(doc);
+            }        
         }else {
               res.send(doc);
         }
